@@ -57,7 +57,7 @@ select name from world
 where gdp > ALL(select gdp from world where continent='europe' and gdp > 0)
 ```
 7.
-```
+```sql
 SELECT continent, name, area FROM world x
   WHERE area>= ALL
     (SELECT area FROM world y
@@ -67,7 +67,7 @@ SELECT continent, name, area FROM world x
 不是join，腦袋別打結。
 8.
 列出各洲國名字母排序最前面的國家
-```
+```sql
 select continent,name from world x
 where name <= ALL(select name from world y where y.continent=x.continent)
 ```
@@ -137,6 +137,24 @@ having sum(population)>=100000000
 - 其他join
   - left/right
   - full 
+
+1.
+```sql
+SELECT matchid,player FROM goal 
+  WHERE teamid='GER'
+```
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9.
+10.
+11.
+12.
+13.
 
 ## self join
 用途: 想要撈取的資料在同一張表。將垂直的資料橫向展開。
