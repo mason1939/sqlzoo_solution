@@ -1,7 +1,6 @@
-# sqlzoo_solution
-[sqlzoo](https://sqlzoo.net/)詳解
+# SQLZoo Solution
 
-SQL is an important skill. But do not try to do every thing with SQL.
+SQL is an important skill but DO NOT try to do every thing with SQL.
 
 When attempting to do that, you are messing up your projects and eventually they end up with garbage. 
 
@@ -10,6 +9,12 @@ Complicated SQL queries are not easy to maintain, especially there are tightly c
 It's totally a nightmare. Believe me. I've been there. 
 
 Investing some time to bulild a good software structure is way more important.
+
+In my opinion, if you are able to solve exercises from SQLZoo, I'd say it's sufficient for a developer.
+
+Unless you'd like to spend your life in database. You'll get bord easily. It's up to you and good luck.
+
+I'll provide solutions and make detailed explainations for hard ones. Enjoy!
 
 ## select basics
 
