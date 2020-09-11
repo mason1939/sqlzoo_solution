@@ -21,7 +21,8 @@ SELECT name FROM world
 2.
 ```sql
 select name from world 
-where continent='europe' and gdp/population > (select gdp/population from world where name='united kingdom') 
+where continent='europe' and 
+gdp/population > (select gdp/population from world where name='united kingdom') 
 ```
 3.
 ```sql
