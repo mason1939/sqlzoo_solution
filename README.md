@@ -312,10 +312,10 @@ SELECT id,mdate,
   FROM game left JOIN goal ON matchid = id
 order by mdate,gtime
 ```
-Now it's now a complete scoring records ordered by time in each game. 
+Now it's a table with complete scoring records ordered by time in each game. 
 And (id,mdate,team1,team2,score_1,score_2,gtime) is considered as a candidate key.
 Since we want the final scores of each game, all we have to do is take (id,mdate,team1,team2) as a group to sum up score_1 and score_2.
-Have you noticed that? (id,mdate,team1,team2) is not a super key. So there is something you can sum up.
+Have you noticed that? (id,mdate,team1,team2) is not a super key. That is, there is something you can sum up.
 Still don't get it? Try this.
 ```sql
 SELECT id,mdate,
