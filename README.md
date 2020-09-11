@@ -65,6 +65,7 @@ SELECT continent, name, area FROM world x
           AND area>0)
 ```
 不是join，腦袋別打結。
+
 8.
 列出各洲國名字母排序最前面的國家
 ```sql
@@ -96,9 +97,11 @@ FROM world
 select continent from world
 group by continent
 
+--alternative
 select distinct continent from world
 ```
-雖然使用distinct更直覺，但使用groupb by有助於了解它的原理
+It is more intuitive to use distinct. However, using group by help you to get better understanding about how group by works.
+
 3.
 ```sql
 select sum(gdp) from world
@@ -144,17 +147,173 @@ SELECT matchid,player FROM goal
   WHERE teamid='GER'
 ```
 2.
+```sql
+SELECT id,stadium,team1,team2
+  FROM game where id=1012
+```
 3.
+```sql
+SELECT player,teamid,stadium,mdate
+  FROM game JOIN goal ON (id=matchid) where teamid='GER'
+```
 4.
+```sql
+SELECT team1,team2,player
+  FROM game JOIN goal ON (id=matchid) where player like 'Mario%'
+```
 5.
+```sql
+SELECT player, teamid,coach, gtime
+  FROM goal join eteam on (teamid=id)
+ WHERE gtime<=10
+```
 6.
+```sql
+select mdate,teamname from game join eteam on (team1=eteam.id)
+where coach = 'Fernando Santos'
+```
 7.
+```sql
+select player from game join goal on (id=matchid)
+where stadium='National Stadium, Warsaw'
+```
 8.
+```sql
+SELECT distinct player
+  FROM game JOIN goal ON matchid = id 
+    WHERE teamid<>'GER' and (team1='GER' or Team2='GER')
+```
 9.
+```sql
+SELECT teamname,count(teamname)
+  FROM eteam JOIN goal ON id=teamid
+group by teamname
+ORDER BY teamname
+```
 10.
+```sql
+SELECT stadium,count(teamid)
+  FROM game JOIN goal ON id=matchid
+group by stadium
+```
+依stadium執行聚合
+
 11.
+```sql
+select matchid,mdate,count(teamid) from goal join game on (id=matchid)
+where team1='POL' or team2='POL'
+group by matchid,mdate
+```
+Ignore columns not shown in select clause except ones in aggregate function. they don't affect "group by" effect.
+
+From the example they are goal.teamid, game.team1, game.team2.
+
+tip: 
+when generating a table using join, you can use 2 steps to make sure you do it right.
+
+- step 1. Test
+
+a. Determin all columns needed
+
+b. Show the joined table to make sure the result is what you expect.
+
+- step 2. Refine
+
+a. Add where clause.
+
+b. Remove unnecessary columns from select clause to perfrom group by
+
+c. filter aggregate function results using having clause
+
 12.
+```sql
+select matchid,mdate,count(teamid) from goal join game on (id=matchid)
+where teamid='GER'
+Group by matchid,mdate
+```
+Tip:
+
+Sometimes joining is to add columns from other tables. In that case, you should not perfrom join operation in the first place.
+Instead, you should generate the table with minimal requirements to stay focused. From the example above,
+I sum up the scores goaled by Gerymany in each game. After that, I introduce the mdate colum using join.
+It perfectly illustrated the bottom up approach .
+
 13.
+```sql
+select matchid,count(teamid) from goal where teamid='ESP'
+group by matchid
+select id,mdate,count(teamid) from goal join game on (id=matchid) where team1='ESP' or team2='ESP'
+--以上是拆解測試
+
+SELECT mdate,
+  team1,
+  sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1,
+  team2,
+  sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+  FROM game left JOIN goal ON matchid = id
+group by id,mdate,team1,team2
+order by mdate,id,team1,team2
+```
+
+tip:
+
+Why left join? Consider the query below
+```sql
+select * from game left join goal on (id=matchid) where teamid is null
+```
+which means some games in which both teams do not score.
+It's quite reasonable that some score data won't be shown in table goal when using equi-join.
+The requirement is to list the final scores of each game. In other words, we need all records in table game to be shown.
+As a result, Left join is required.
+
+Group by team1 and team2 at the same time?
+No worries. Consider the query below.
+```sql
+SELECT mdate,
+  team1,
+  (CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score_1,
+  team2,
+  (CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score_2
+  FROM game left JOIN goal ON matchid = id
+```
+Semantically, (id,mdate,team1,team2,score_1,score_2) is a historical scoring record.
+Each record is implied as unique because records grows with time.
+
+Is (id,mdate,team1,team2,score_1,score_2) a super key?
+
+Actually yes, but by definition, no. 
+
+What if we add gtime to the previous query?
+```sql
+SELECT id,mdate,
+  team1,
+  CASE WHEN teamid=team1 THEN 1 ELSE 0 END score1,
+  team2,
+  CASE WHEN teamid=team2 THEN 1 ELSE 0 END score2
+  ,gtime
+  FROM game left JOIN goal ON matchid = id
+order by mdate,gtime
+```
+Now it's now a complete scoring records ordered by time in each game. 
+And (id,mdate,team1,team2,score_1,score_2,gtime) is considered as a candidate key.
+Since we want the final scores of each game, all we have to do is take (id,mdate,team1,team2) as a group to sum up score_1 and score_2.
+Have you noticed that? (id,mdate,team1,team2) is not a super key. So there is something you can sum up.
+Still don't get it? Try this.
+```sql
+SELECT id,mdate,
+  team1,
+  sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1,
+  team2,
+  sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+  FROM game left JOIN goal ON matchid = id
+group by id,mdate,team1,team2,gtime
+order by mdate,gtime
+```
+Initially I'm also not comfortable when taking (id,mdate,team1,team2) as a group.
+What I'm worried about is group team1 and team2 at the same time might ruin the result.
+Just like what gtime did in the query above.
+After digging into tables, I've figure it out.
+Now, Problem solved.
 
 ## self join
 用途: 想要撈取的資料在同一張表。將垂直的資料橫向展開。
