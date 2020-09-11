@@ -10,11 +10,13 @@ It's totally a nightmare. Believe me. I've been there.
 
 Investing some time to bulild a good software structure is way more important.
 
-In my opinion, if you are able to solve exercises from SQLZoo, I'd say it's sufficient for a developer.
+In my opinion, if you are able to solve exercises from SQLZoo, I'd say it's sufficient for developers.
 
-Unless you'd like to spend your life in database. You'll get bord easily. It's up to you and good luck.
+Unless you'd like to spend your life in database. I'm gonna says that you'll get bord very fast. 
 
-I'll provide solutions and make detailed explainations for hard ones. Enjoy!
+However, it's your call and good luck.
+
+I'll provide solutions here and make detailed explainations for hard ones. Enjoy!
 
 ## select basics
 
