@@ -302,17 +302,17 @@ Still don't get it? Try this.
 ```sql
 SELECT id,mdate,
   team1,
-  sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1,
+  sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score_1,
   team2,
-  sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+  sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score_2
   FROM game left JOIN goal ON matchid = id
 group by id,mdate,team1,team2,gtime
 order by mdate,gtime
 ```
-Initially I'm also not comfortable when taking (id,mdate,team1,team2) as a group.
+Initially I also don't feek comfortable when taking (id,mdate,team1,team2) as a group.
 What I'm worried about is group team1 and team2 at the same time might ruin the result.
-Just like what gtime did in the query above.
-After digging into tables, I've figure it out.
+Just like what gtime did in the last query.
+After digging into the tables, I've figure it out.
 Now, Problem solved.
 
 ## self join
