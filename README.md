@@ -1,6 +1,16 @@
 # sqlzoo_solution
 [sqlzoo](https://sqlzoo.net/)詳解
 
+SQL is an important skill. But do not try to do every thing with SQL.
+
+When attempting to do that, you are messing up your projects and eventually they end up with garbage. 
+
+Complicated SQL queries are not easy to maintain, especially there are tightly coupled with business logic.
+
+It's totally a nightmare. Believe me. I've been there. 
+
+Investing some time to bulild a good software structure is way more important.
+
 ## select basics
 
 ## select from world
