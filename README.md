@@ -196,7 +196,7 @@ SELECT stadium,count(teamid)
   FROM game JOIN goal ON id=matchid
 group by stadium
 ```
-依stadium執行聚合
+Aggregate with stadium
 
 11.
 ```sql
@@ -312,7 +312,7 @@ order by mdate,gtime
 Initially I also don't feek comfortable when taking (id,mdate,team1,team2) as a group.
 What I'm worried about is group team1 and team2 at the same time might ruin the result.
 Just like what gtime did in the last query.
-After digging into the tables, I've figure it out.
+By digging into the tables and doning some experiemnts, I've gained more comprehensive understanding of how joining and grouping by work.
 Now, Problem solved.
 
 ## self join
