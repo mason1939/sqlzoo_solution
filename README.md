@@ -133,6 +133,92 @@ WHERE name LIKE '%a%'
 ```
 [top](#topics)
 ## Select from Nobel
+
+1.
+```sql
+SELECT yr, subject, winner FROM nobel
+WHERE yr = 1950
+```
+2.
+```sql
+SELECT winner FROM nobel
+WHERE yr = 1962 AND subject = 'Literature'
+```
+3.
+```sql
+select yr,subject from nobel
+where winner='albert einstein'
+```
+4.
+```sql
+select winner from nobel
+where yr>=2000 and subject='peace'
+```
+5.
+```sql
+select * from nobel
+where yr between 1980 and 1989
+        and subject='literature'
+```
+6.
+```sql
+select * from nobel
+where winner in ('Theodore Roosevelt','woodrow wilson','jimmy carter','barack obama')
+```
+7.
+```sql
+select winner from nobel where winner like 'John%'
+```
+8.
+```sql
+select * from nobel where 
+(yr=1980 and subject='physics') or 
+(yr=1984 and subject='chemistry')
+```
+9.
+```sql
+select * from nobel
+where yr=1980 and subject not in ('Chemistry','Medicine')
+```
+10.
+```sql
+select * from nobel
+where (yr<1910 and subject='Medicine') or 
+      (yr>=2004 and subject='literature')
+```
+11.
+```sql
+select * from nobel
+where winner='peter grünberg'
+```
+tip:
+
+Alt+252 (with you num lock on)
+
+12.**Esacpe Character => '**
+```sql
+select * from nobel where winner='eugene o''neill'
+```
+13.
+```sql
+select winner,yr,subject from nobel
+where winner like 'sir%'
+order by yr desc,winner
+```
+14.
+```sql
+SELECT winner, subject
+FROM nobel
+WHERE yr=1984
+ORDER BY subject IN ('Physics','Chemistry'),subject,winner
+```
+tip:
+```sql
+SELECT winner, subject,subject IN ('Physics','Chemistry')
+FROM nobel
+WHERE yr=1984
+ORDER BY subject,winner
+```
 [top](#topics)
 ## Select in Select
 
