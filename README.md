@@ -181,64 +181,74 @@ having sum(population)>=100000000
 
 1.
 ```sql
-SELECT matchid,player FROM goal 
-  WHERE teamid='GER'
+SELECT matchid,player FROM goal WHERE teamid='GER'
 ```
 2.
 ```sql
-SELECT id,stadium,team1,team2
-  FROM game where id=1012
+SELECT id,stadium,team1,team2 FROM game where id=1012
 ```
 3.
 ```sql
 SELECT player,teamid,stadium,mdate
-  FROM game JOIN goal ON (id=matchid) where teamid='GER'
+FROM game JOIN goal ON (id=matchid)
+where teamid='GER'
 ```
 4.
 ```sql
 SELECT team1,team2,player
-  FROM game JOIN goal ON (id=matchid) where player like 'Mario%'
+FROM game
+  JOIN goal ON (id=matchid)
+where player like 'Mario%'
 ```
 5.
 ```sql
 SELECT player, teamid,coach, gtime
-  FROM goal join eteam on (teamid=id)
- WHERE gtime<=10
+FROM goal
+  join eteam on (teamid=id)
+WHERE gtime<=10
 ```
 6.
 ```sql
-select mdate,teamname from game join eteam on (team1=eteam.id)
+select mdate,teamname
+from game
+  join eteam on (team1=eteam.id)
 where coach = 'Fernando Santos'
 ```
 7.
 ```sql
-select player from game join goal on (id=matchid)
+select player from game
+              join goal on (id=matchid)
 where stadium='National Stadium, Warsaw'
 ```
 8.
 ```sql
 SELECT distinct player
-  FROM game JOIN goal ON matchid = id 
-    WHERE teamid<>'GER' and (team1='GER' or Team2='GER')
+FROM game
+  JOIN goal ON matchid = id 
+WHERE teamid<>'GER' and (team1='GER' or Team2='GER')
 ```
 9.
 ```sql
 SELECT teamname,count(teamname)
-  FROM eteam JOIN goal ON id=teamid
+FROM eteam
+  JOIN goal ON id=teamid
 group by teamname
 ORDER BY teamname
 ```
 10.
 ```sql
 SELECT stadium,count(teamid)
-  FROM game JOIN goal ON id=matchid
+FROM game
+  JOIN goal ON id=matchid
 group by stadium
 ```
 Aggregate with stadium
 
 11.
 ```sql
-select matchid,mdate,count(teamid) from goal join game on (id=matchid)
+select matchid,mdate,count(teamid)
+from goal
+  join game on (id=matchid)
 where team1='POL' or team2='POL'
 group by matchid,mdate
 ```
@@ -266,7 +276,9 @@ c. filter aggregate function results using having clause
 
 12.
 ```sql
-select matchid,mdate,count(teamid) from goal join game on (id=matchid)
+select matchid,mdate,count(teamid)
+from goal
+  join game on (id=matchid)
 where teamid='GER'
 Group by matchid,mdate
 ```
@@ -279,9 +291,14 @@ It perfectly illustrated the bottom up approach .
 
 13.
 ```sql
-select matchid,count(teamid) from goal where teamid='ESP'
+select matchid,count(teamid) from goal
+where teamid='ESP'
 group by matchid
-select id,mdate,count(teamid) from goal join game on (id=matchid) where team1='ESP' or team2='ESP'
+
+select id,mdate,count(teamid)
+from goal 
+  join game on (id=matchid)
+where team1='ESP' or team2='ESP'
 --以上是拆解測試
 
 SELECT mdate,
@@ -289,7 +306,7 @@ SELECT mdate,
   sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1,
   team2,
   sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
-  FROM game left JOIN goal ON matchid = id
+FROM game left JOIN goal ON matchid = id
 group by id,mdate,team1,team2
 order by mdate,id,team1,team2
 ```
@@ -313,7 +330,7 @@ SELECT mdate,
   (CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score_1,
   team2,
   (CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score_2
-  FROM game left JOIN goal ON matchid = id
+FROM game left JOIN goal ON matchid = id
 ```
 Semantically, (id,mdate,team1,team2,score_1,score_2) is a historical scoring record.
 Each record is implied as unique because records grows with time.
@@ -330,7 +347,7 @@ SELECT id,mdate,
   team2,
   CASE WHEN teamid=team2 THEN 1 ELSE 0 END score2
   ,gtime
-  FROM game left JOIN goal ON matchid = id
+FROM game left JOIN goal ON matchid = id
 order by mdate,gtime
 ```
 Now it's a table with complete scoring records ordered by time in each game. 
@@ -344,7 +361,7 @@ SELECT id,mdate,
   sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score_1,
   team2,
   sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score_2
-  FROM game left JOIN goal ON matchid = id
+FROM game left JOIN goal ON matchid = id
 group by id,mdate,team1,team2,gtime
 order by mdate,gtime
 ```
