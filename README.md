@@ -2,15 +2,16 @@
 
 ## Topics
 - [Introduction](#instroduction)
-- [select basics](#select-basics)
-- [select from world](#select-from-world)
-- [select from nobel](#select-from-nobel)
-- [select in select](#select-in-select)
-- [sum and count](#sum-and-count)
-- [join](#join)
-- [more join](#more-join)
-- [using null](#using-null)
-- [self join](#self-join)
+- [Select Basics](#select-basics)
+- [Select from World](#select-from-world)
+- [Select from Nobel](#select-from-nobel)
+- [Select in Select](#select-in-select)
+- [Sum and Count](#sum-and-count)
+- [Join](#join)
+- [More Join](#more-join)
+- [Using Null](#using-null)
+- [Self Join](#self-join)
+- [References](#references)
 
 ## Introduction
 
@@ -32,13 +33,13 @@ However, it's your call and good luck.
 
 Here I'll provide solutions and make detailed explainations for hard ones. Enjoy!
 
-## select basics
+## Select Basics
 [top](#topics)
-## select from world
+## Select from World
 [top](#topics)
-## select from nobel
+## Select from Nobel
 [top](#topics)
-## select in select
+## Select in Select
 
 用途: 把另一個查詢當做常數來使用。
 特徵: 通常只會select一個欄位出來
@@ -116,7 +117,7 @@ select name,continent from world x
 where population > ALL(select 3*population from world y where y.name!=x.name and y.continent=x.continent)
 ```
 
-## sum and count
+## Sum and Count
 
 用途: 使用聚合函數
 特徵: 會用到group by,having
@@ -170,7 +171,7 @@ having sum(population)>=100000000
 ```
 [top](#topics)
 
-## join
+## Join
 
 - 預設是 intersect/inner join
 - 其他join
@@ -354,7 +355,7 @@ Now, Problem solved.
 
 [top](#topics)
 
-## more join
+## More Join
 
 1.
 ```sql
@@ -444,7 +445,7 @@ where name <> 'Art Garfunkel'
 ```
 [top](#topics)
 
-## self join
+## Self Join
 
 用途: 想要撈取的資料在同一張表。將垂直的資料橫向展開。
 
@@ -482,5 +483,4 @@ select distinct a.company,b.num from (select * from route where stop=115) a join
 3. https://www.w3schools.com/sql/sql_join.asp , join種類
 4. https://www.sqlshack.com/a-step-by-step-walkthrough-of-sql-inner-join/ , Inner join 實際表格範例
 3. https://www.sqlshack.com/sql-outer-join-overview-and-examples/ , outer join 實際表格範例表格範例
-
 [top](#topics)
