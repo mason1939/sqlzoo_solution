@@ -36,6 +36,101 @@ Here I'll provide solutions and make detailed explainations for hard ones. Enjoy
 ## Select Basics
 [top](#topics)
 ## Select from World
+
+1.
+```sql
+SELECT name, continent, population FROM world
+```
+
+2.
+```sql
+SELECT name 
+FROM world
+WHERE population>=200000000
+```
+
+3.
+```sql
+select name,gdp/population
+from world
+where population >=200000000
+```
+
+4.
+```sql
+select name,population/1000000
+from world
+where continent='South America'
+```
+
+5.
+```sql
+select name,population
+from world
+where name in ('France','Germany','Italy')
+```
+
+6.
+```sql
+select name from world where name like '%united%'
+```
+
+7.
+```sql
+select name,population,area
+from world
+where area > 3000000 or population > 250000000
+```
+
+8.
+```sql
+select name,population,area
+from world
+where (area > 3000000 and population <= 250000000) or
+(area <=3000000 and population >250000000)
+```
+
+9.
+```sql
+select name,
+        round(population/1000000,2),
+        round(gdp/1000000000,2)
+from world
+where continent='south america'
+```
+
+10.
+```sql
+select name,round(gdp/population,-3)
+from world
+where gdp >= 1000000000000
+```
+
+11.
+```sql
+SELECT name, capital
+FROM world
+WHERE LENGTH(name)=LENGTH(capital)
+```
+
+12.
+```sql
+SELECT name,capital
+FROM world
+where LEFT(name,1)=left(capital,1) and name<>capital
+```
+
+13.
+```sql
+SELECT name
+FROM world
+WHERE name LIKE '%a%' 
+  and name like '%e%' 
+  and name like '%i%'
+  AND name LIKE '%o%'
+  and name like '%u%'
+  and name not like '% %'
+```
 [top](#topics)
 ## Select from Nobel
 [top](#topics)
