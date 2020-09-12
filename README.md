@@ -672,25 +672,30 @@ where name <> 'Art Garfunkel'
 select name from teacher
 where dept is null
 ```
-1.
+2.
 ```sql
 SELECT teacher.name, dept.name
 FROM teacher inner JOIN dept
            ON (teacher.dept=dept.id)
 ```
-1.
+
+tip: Inner join skip teacher whose dept is NULL.
+
+[Null == dept.id ==> unknown](https://en.wikipedia.org/wiki/Null_%28SQL%29#Comparisons_with_NULL_and_the_three-valued_logic_(3VL))
+
+3.
 ```sql
 SELECT teacher.name, dept.name
 FROM teacher left JOIN dept
            ON (teacher.dept=dept.id)
 ```
-1.
+4.
 ```sql
 SELECT teacher.name, dept.name
 FROM teacher right JOIN dept
            ON (teacher.dept=dept.id)
 ```
-1.
+5.
 ```sql
 select name,coalesce(mobile,'07986 444 2266') from teacher
 ```
@@ -699,31 +704,31 @@ select name,coalesce(mobile,'07986 444 2266') from teacher
 select name,case when mobile is null then '07986 444 2266' else mobile end
 from teacher
 ```
-1.
+6.
 ```sql
 select teacher.name,coalesce(dept.name,'None')
 from teacher left join dept on (teacher.dept=dept.id)
 ```
-1.
+7.
 ```sql
 select count(name),count(mobile) from teacher
 ```
-aggregate function ignores NULL
+tip: Aggregate functions ignore NULL
 
-1.
+8.
 ```sql
 select dept.name,count(teacher.name)
 from teacher right join dept on (teacher.dept=dept.id)
 group by dept.name
 ```
-1.
+9.
 ```sql
 select name,case when dept=1 then 'Sci'
                 when dept=2 then 'Sci'
                 else 'Art' end
 from teacher
 ```
-1.
+10.
 ```sql
 select name,case when dept=1 then 'Sci' 
                 when dept=2 then 'Sci'
@@ -770,6 +775,7 @@ select distinct a.company,b.num from (select * from route where stop=115) a join
 2. https://stevenjhu.com/2020/01/18/sql%E5%AD%B8%E7%BF%92-join-%E9%80%A3%E6%8E%A5-sql-join/ , join的種類
 3. https://www.w3schools.com/sql/sql_join.asp , join種類
 4. https://www.sqlshack.com/a-step-by-step-walkthrough-of-sql-inner-join/ , Inner join 實際表格範例
-3. https://www.sqlshack.com/sql-outer-join-overview-and-examples/ , outer join 實際表格範例表格範例
+5. https://www.sqlshack.com/sql-outer-join-overview-and-examples/ , outer join 實際表格範例表格範例
+6. http://en.wikipedia.org/wiki/Null_%28SQL%29, NULL
 
 [top](#topics)
