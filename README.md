@@ -42,6 +42,7 @@ Here I'll provide solutions and make detailed explainations for hard ones. Enjoy
 
 用途: 把另一個查詢當做常數來使用。
 特徵: 通常只會select一個欄位出來
+
 1.
 ```sql
 SELECT name FROM world
@@ -116,6 +117,7 @@ where population > ALL(select 3*population from world y where y.name!=x.name and
 ```
 
 ## sum and count
+
 用途: 使用聚合函數
 特徵: 會用到group by,having
 
@@ -167,7 +169,9 @@ group by continent
 having sum(population)>=100000000
 ```
 [top](#topics)
+
 ## join
+
 - 預設是 intersect/inner join
 - 其他join
   - left/right
@@ -240,7 +244,8 @@ Ignore columns not shown in select clause except ones in aggregate function. the
 
 From the example they are goal.teamid, game.team1, game.team2.
 
-tip: 
+tip:
+
 when generating a table using join, you can use 2 steps to make sure you do it right.
 
 - step 1. Test
@@ -346,9 +351,11 @@ What I'm worried about is group team1 and team2 at the same time might ruin the 
 Just like what gtime did in the last query.
 By digging into the tables and doning some experiemnts, I've gained more comprehensive understanding of how joining and grouping by work.
 Now, Problem solved.
+
 [top](#topics)
 
 ## more join
+
 1.
 ```sql
 SELECT id, title
@@ -436,7 +443,9 @@ select distinct name from
 where name <> 'Art Garfunkel'
 ```
 [top](#topics)
+
 ## self join
+
 用途: 想要撈取的資料在同一張表。將垂直的資料橫向展開。
 
 例如: 
@@ -465,10 +474,13 @@ select distinct a.company,b.num from (select * from route where stop=115) a join
 (select * from route where stop=137) b on (a.num=b.num)
 ```
 [top](#topics)
+
 ## References
+
 1. https://www.essentialsql.com/learn-to-use-union-intersect-and-except-clauses/ , 表格的交集與聯集
 2. https://stevenjhu.com/2020/01/18/sql%E5%AD%B8%E7%BF%92-join-%E9%80%A3%E6%8E%A5-sql-join/ , join的種類
 3. https://www.w3schools.com/sql/sql_join.asp , join種類
 4. https://www.sqlshack.com/a-step-by-step-walkthrough-of-sql-inner-join/ , Inner join 實際表格範例
 3. https://www.sqlshack.com/sql-outer-join-overview-and-examples/ , outer join 實際表格範例表格範例
+
 [top](#topics)
