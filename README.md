@@ -116,6 +116,7 @@ where 25000000 >= ALL(select population from world x where y.continent=x.contine
 select name,continent from world x
 where population > ALL(select 3*population from world y where y.name!=x.name and y.continent=x.continent)
 ```
+[top](#topics)
 
 ## Sum and Count
 
