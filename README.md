@@ -333,6 +333,94 @@ Just like what gtime did in the last query.
 By digging into the tables and doning some experiemnts, I've gained more comprehensive understanding of how joining and grouping by work.
 Now, Problem solved.
 
+## more join
+1.
+```sql
+SELECT id, title
+ FROM movie
+ WHERE yr=1962
+```
+2.
+```sql
+select yr from movie where title='citizen kane'
+```
+3.
+```sql
+select id,title,yr from movie 
+where title like '%star trek%' order by yr
+```
+4.
+```sql
+select id from actor where name='glenn close'
+```
+5.
+```sql
+select id from movie where title='casablanca'
+```
+6.
+```sql
+select name from casting join actor on (actorid=id) where movieid=11768
+```
+7.
+```sql
+select name from casting join actor on (actorid=id) where movieid in (select id from movie where title='alien')
+```
+8.
+```sql
+select title from movie join casting on (movie.id=casting.movieid) where actorid=(select id from actor where name='Harrison Ford')
+```
+9.
+```sql
+select title from movie join casting on (movie.id=casting.movieid) where casting.ord<>1 and actorid=(select id from actor where name='Harrison Ford')
+```
+10.
+```sql
+select title,actor.name
+from(select title,actorid from
+    movie join casting on (movieid=id)
+where yr=1962 and ord=1)a join actor on(actorid=actor.id)
+```
+11.
+```sql
+SELECT yr,COUNT(title) count FROM
+  movie JOIN casting ON movie.id=movieid
+        JOIN actor   ON actorid=actor.id
+WHERE name='rock hudson'
+GROUP BY yr
+HAVING COUNT(title) > 2
+```
+12.
+```sql
+select title,name from movie join casting on(movie.id=casting.movieid) join actor
+on (casting.actorid=actor.id)
+where movie.id in 
+(SELECT movieid FROM casting
+WHERE actorid IN (
+  SELECT id FROM actor
+  WHERE name='Julie Andrews')
+) and casting.ord=1
+```
+13.
+```sql
+select name from casting join actor on(actorid=id) where ord=1
+group by name
+having count(actorid) >= 15
+order by name
+```
+14.
+```sql
+select title,count(actorid) count from (select title,id from movie where yr=1978)a join casting on (id=movieid)
+group by title
+order by count desc,title
+```
+15.
+```sql
+select distinct name from
+(select actorid from casting where movieid in (select movieid from casting where actorid in (select id from actor where name='Art Garfunkel'))
+)a join actor on (actor.id=a.actorid)
+where name <> 'Art Garfunkel'
+```
+
 ## self join
 用途: 想要撈取的資料在同一張表。將垂直的資料橫向展開。
 
