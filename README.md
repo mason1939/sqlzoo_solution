@@ -748,6 +748,70 @@ employee(id,name,duty,manager_id): manager_id是也是員工id, 現在想撈出�
 
 bus_route(num,company,pos,stop): 合併時把公車依路線做笛卡爾乘積後就列舉能某路公車任兩點間的路線集合。如同sql zoo中的範例
 
+
+1.
+```sql
+select count(name) from stops
+```
+
+2.
+```sql
+select id from stops where name='Craiglockhart'
+```
+
+3.
+```sql
+select id,name from stops
+where id in (select stop from route where num='4' and company='LRT')
+```
+
+4.
+```sql
+SELECT company, num, COUNT(*)
+FROM route WHERE stop=149 OR stop=53
+GROUP BY company, num
+having count(*)=2
+```
+
+5.
+```sql
+SELECT a.company, a.num, a.stop, b.stop
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+WHERE a.stop=53 and b.stop=149
+```
+
+6.
+```sql
+SELECT a.company, a.num, stopa.name, stopb.name
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' and stopb.name='London Road'
+```
+
+7.
+```sql
+
+```
+
+8.
+```sql
+
+```
+
+9.
+```sql
+
+```
+
+10.
+```sql
+
+```
+
+
 7. 
 - 直接硬幹。笛卡爾乘積做完後再篩出要的
 ```sql
