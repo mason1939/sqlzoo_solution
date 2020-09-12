@@ -429,15 +429,13 @@ HAVING COUNT(title) > 2
 12.
 ```sql
 select title,name from movie 
-              join casting on(movie.id=casting.movieid)
-            join actor on (casting.actorid=actor.id)
-where movie.id in 
-(SELECT movieid FROM casting
-  WHERE actorid IN (
-                    SELECT id FROM actor
-                    WHERE name='Julie Andrews')
-                    )
-        and casting.ord=1
+                  join casting on(movie.id=casting.movieid)
+                  join actor on (casting.actorid=actor.id)
+where movie.id in (SELECT movieid FROM casting
+                    WHERE actorid IN (SELECT id FROM actor
+                                      WHERE name='Julie Andrews')
+                  )
+      and casting.ord=1
 ```
 13.
 ```sql
