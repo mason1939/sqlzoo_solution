@@ -440,7 +440,7 @@ where movie.id in (SELECT movieid FROM casting
 13.
 ```sql
 select name from casting
-                join actor on(actorid=id)
+            join actor on(actorid=id)
 where ord=1
 group by name
 having count(actorid) >= 15
@@ -448,8 +448,8 @@ order by name
 ```
 14.
 ```sql
-select title,count(actorid) count from
-    (select title,id from movie
+select title,count(actorid) count
+from (select title,id from movie
       where yr=1978)a
     join casting on (id=movieid)
 group by title
@@ -457,14 +457,13 @@ order by count desc,title
 ```
 15.
 ```sql
-select distinct name from
-    (select actorid from casting
-      where movieid in (select movieid from casting
-                        where actorid in (select id from actor
-                                          where name='Art Garfunkel')
-                        )
-    )a
-    join actor on (actor.id=a.actorid)
+select distinct name from (select actorid from casting
+                            where movieid in (select movieid from casting
+                                              where actorid in (select id from actor
+                                                                  where name='Art Garfunkel')
+                                             )
+                          )a
+                    join actor on (actor.id=a.actorid)
 where name <> 'Art Garfunkel'
 ```
 [top](#topics)
