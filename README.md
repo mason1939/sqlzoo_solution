@@ -681,7 +681,7 @@ FROM teacher inner JOIN dept
 
 tip: Inner join skip teacher whose dept is NULL.
 
-[Null == dept.id ==> unknown](https://en.wikipedia.org/wiki/Null_%28SQL%29#Comparisons_with_NULL_and_the_three-valued_logic_(3VL))
+[Null=dept.id ==> unknown](https://en.wikipedia.org/wiki/Null_%28SQL%29#Comparisons_with_NULL_and_the_three-valued_logic_(3VL))
 
 3.
 ```sql
