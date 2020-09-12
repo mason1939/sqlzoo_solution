@@ -192,11 +192,9 @@ where (yr<1910 and subject='Medicine') or
 select * from nobel
 where winner='peter grünberg'
 ```
-tip:
+tip: Alt+252 (with your num lock on)
 
-Alt+252 (with you num lock on)
-
-12.**Esacpe Character => '**
+12. **Esacpe Character => '**
 ```sql
 select * from nobel where winner='eugene o''neill'
 ```
