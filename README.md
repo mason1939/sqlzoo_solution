@@ -1,5 +1,18 @@
 # SQLZoo Solutions
 
+## Topics
+- [Introduction]
+- [select basics](#select-basics)
+- [select from world](#select-from-world)
+- [select from nobel](#select-from-nobel)
+- [select in select](#select-in-select)
+- [sum and count](#sum-and-count)
+- [join](#join)
+- [more join](#more-join)
+- [using null](#using-null)
+- [self join](#self-join)
+
+## Introduction
 SQL is an important skill but DO NOT try to do every thing with SQL.
 
 When attempting to do that, you are messing up your projects and eventually they end up with garbage. 
@@ -17,7 +30,6 @@ Unless you'd like to spend your life in database. I'm gonna says that you'll get
 However, it's your call and good luck.
 
 Here I'll provide solutions and make detailed explainations for hard ones. Enjoy!
-
 ## select basics
 
 ## select from world
