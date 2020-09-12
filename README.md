@@ -768,7 +768,8 @@ where id in (select stop from route where num='4' and company='LRT')
 4.
 ```sql
 SELECT company, num, COUNT(*)
-FROM route WHERE stop=149 OR stop=53
+FROM route
+WHERE stop=149 OR stop=53
 GROUP BY company, num
 having count(*)=2
 ```
