@@ -171,9 +171,10 @@ select winner from nobel where winner like 'John%'
 ```
 8.
 ```sql
-select * from nobel where 
-(yr=1980 and subject='physics') or 
-(yr=1984 and subject='chemistry')
+select * from nobel
+where 
+    (yr=1980 and subject='physics') or 
+    (yr=1984 and subject='chemistry')
 ```
 9.
 ```sql
