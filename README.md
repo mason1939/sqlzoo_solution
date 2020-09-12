@@ -457,13 +457,13 @@ order by count desc,title
 ```
 15.
 ```sql
-select distinct name from (select actorid from casting
-                            where movieid in (select movieid from casting
-                                              where actorid in (select id from actor
-                                                                  where name='Art Garfunkel')
-                                             )
-                          )a
-                    join actor on (actor.id=a.actorid)
+select distinct name
+from (select actorid from casting
+      where movieid in (select movieid from casting
+                        where actorid in (select id from actorwhere name='Art Garfunkel')
+                       )
+     )a
+  join actor on (actor.id=a.actorid)
 where name <> 'Art Garfunkel'
 ```
 [top](#topics)
