@@ -1,7 +1,7 @@
 # SQLZoo Solutions
 
 ## Topics
-- [Introduction]
+- [Introduction](#instroduction)
 - [select basics](#select-basics)
 - [select from world](#select-from-world)
 - [select from nobel](#select-from-nobel)
