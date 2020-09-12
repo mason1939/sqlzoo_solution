@@ -13,6 +13,7 @@
 - [self join](#self-join)
 
 ## Introduction
+
 SQL is an important skill but DO NOT try to do every thing with SQL.
 
 When attempting to do that, you are messing up your projects and eventually they end up with garbage. 
@@ -30,6 +31,7 @@ Unless you'd like to spend your life in database. I'm gonna says that you'll get
 However, it's your call and good luck.
 
 Here I'll provide solutions and make detailed explainations for hard ones. Enjoy!
+
 ## select basics
 [top](#topics)
 ## select from world
@@ -37,9 +39,9 @@ Here I'll provide solutions and make detailed explainations for hard ones. Enjoy
 ## select from nobel
 [top](#topics)
 ## select in select
+
 用途: 把另一個查詢當做常數來使用。
 特徵: 通常只會select一個欄位出來
-
 1.
 ```sql
 SELECT name FROM world
