@@ -192,7 +192,8 @@ where (yr<1910 and subject='Medicine') or
 select * from nobel
 where winner='peter grünberg'
 ```
-tip: Alt+252 (with your num lock on)
+tip: [Alt+252 (with your num lock on)]
+(https://www.vistawide.com/languages/typing_foreign_language_characters.htm#german)
 
 12. **Esacpe Character => '**
 ```sql
@@ -662,6 +663,73 @@ from (select actorid from casting
      )a
   join actor on (actor.id=a.actorid)
 where name <> 'Art Garfunkel'
+```
+[top](#topics)
+## Using Null
+
+1.
+```sql
+select name from teacher
+where dept is null
+```
+1.
+```sql
+SELECT teacher.name, dept.name
+FROM teacher inner JOIN dept
+           ON (teacher.dept=dept.id)
+```
+1.
+```sql
+SELECT teacher.name, dept.name
+FROM teacher left JOIN dept
+           ON (teacher.dept=dept.id)
+```
+1.
+```sql
+SELECT teacher.name, dept.name
+FROM teacher right JOIN dept
+           ON (teacher.dept=dept.id)
+```
+1.
+```sql
+select name,coalesce(mobile,'07986 444 2266') from teacher
+```
+'case' works too.
+```sql
+select name,case when mobile is null then '07986 444 2266' else mobile end
+from teacher
+```
+1.
+```sql
+select teacher.name,coalesce(dept.name,'None')
+from teacher left join dept on (teacher.dept=dept.id)
+```
+1.
+```sql
+select count(name),count(mobile) from teacher
+```
+aggregate function ignores NULL
+
+1.
+```sql
+select dept.name,count(teacher.name)
+from teacher right join dept on (teacher.dept=dept.id)
+group by dept.name
+```
+1.
+```sql
+select name,case when dept=1 then 'Sci'
+                when dept=2 then 'Sci'
+                else 'Art' end
+from teacher
+```
+1.
+```sql
+select name,case when dept=1 then 'Sci' 
+                when dept=2 then 'Sci'
+                when dept=3 then 'Art' 
+                else 'None' end
+from teacher 
 ```
 [top](#topics)
 
