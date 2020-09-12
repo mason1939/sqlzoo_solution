@@ -483,4 +483,5 @@ select distinct a.company,b.num from (select * from route where stop=115) a join
 3. https://www.w3schools.com/sql/sql_join.asp , join種類
 4. https://www.sqlshack.com/a-step-by-step-walkthrough-of-sql-inner-join/ , Inner join 實際表格範例
 3. https://www.sqlshack.com/sql-outer-join-overview-and-examples/ , outer join 實際表格範例表格範例
+
 [top](#topics)
