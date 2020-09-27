@@ -532,7 +532,7 @@ FROM game left JOIN goal ON matchid = id
 order by mdate,gtime
 ```
 Now it's a table with complete scoring records ordered by time in each game. 
-And (id,mdate,team1,team2,score_1,score_2,gtime) is considered as a candidate key.
+And (id,mdate,team1,team2,score_1,score_2,gtime) is considered as a super key.
 Since we want the final scores of each game, all we have to do is take (id,mdate,team1,team2) as a group to sum up score_1 and score_2.
 Have you noticed that? (id,mdate,team1,team2) is not a super key. That is, there is something you can sum up.
 Still don't get it? Try this.
@@ -546,8 +546,8 @@ FROM game left JOIN goal ON matchid = id
 group by id,mdate,team1,team2,gtime
 order by mdate,gtime
 ```
-Initially I also don't feek comfortable when taking (id,mdate,team1,team2) as a group.
-What I'm worried about is group team1 and team2 at the same time might ruin the result.
+Initially I also don't feel comfortable when taking (id,mdate,team1,team2) as a group.
+What I'm worried about is grouping team1 and team2 at the same time might ruin the result.
 Just like what gtime did in the last query.
 By digging into the tables and doning some experiemnts, I've gained more comprehensive understanding of how joining and grouping by work.
 Now, Problem solved.
