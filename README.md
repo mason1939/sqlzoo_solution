@@ -837,7 +837,8 @@ select a.company,a.num,a.pos,a.stop,b.stop from
         (select * from route where company='LRT' and num='12') b
         on (a.num=b.num and a.company=b.company)
 ```
-Given the join condition, DB will generate all combinations of stops in table a and table b, i.e. (a.stop,b.stop) pairs.
+Given the join conditions, DB will generate all combinations of stops in table a and table b, i.e. (a.stop,b.stop) pairs.
+
 It's called Cartesian product.
 ```sql
 select a.company,a.num,a.pos,a.stop,b.stop
@@ -850,24 +851,45 @@ All we need to do is find a rcord with stop 115 and 137 in the joined table.
 Note that there are 18 records in table a; while there are 324 (18 X 18) records in the joined table which is result from Cartesian product.
 Now use the same trick to solve the original question.
 
-The main idea of this method is to create a table with a header (company, num, pos, start stop, end stop) by self-join.
-The trick is useful when you want to duplicate a column from another whatever you purpose is.
-
+The main idea of this method is to create a table with a header, (company, num, pos, start stop, end stop), by self-join.
+The trick is useful when you want to duplicate one column from another whatever you purpose is.
 
 8.
 ```sql
-
+select a.company,b.num 
+from (select * from route where stop=53) a join
+      (select * from route where stop=230) b
+on a.num=b.num and a.company=b.company
 ```
 
 9.
 ```sql
-
+select b.name,b.company,b.num
+from 
+ (select * from route) a join
+ (select * from route join stops on (route.stop=stops.id)) b
+ on (a.num=b.num and a.company=b.company)
+where a.stop=53
 ```
 
 10.
 ```sql
-
+select g.num,g.company,name,g.num2,g.company2 from
+(select e.num,e.company,e.conn,f.num num2,f.company company2
+from
+  (select a.company,a.num,a.stop,b.stop conn from route a,route b where a.stop=53  and a.company=b.company and a.num=b.num)e join
+(select c.company,c.num,c.stop,d.stop conn2 from route c,route d where c.stop=147 and d.company=c.company and c.num=d.num)f
+on e.conn=f.conn2) g join 
+stops on (g.conn=stops.id)
 ```
+The problem is to find a stop,say XYZ, that connnects Craiglockhart and Lochend
+Step 1. Find direct route from Craiglockhart to XYZ
+Step 2. Find direct route from Lochend to XYZ
+Step 3. Find the interection of results of step1 and step2.
+
+
+
+
 [top](#topics)
 
 ## References
