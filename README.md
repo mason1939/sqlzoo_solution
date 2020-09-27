@@ -794,8 +794,65 @@ WHERE stopa.name='Craiglockhart' and stopb.name='London Road'
 
 7.
 ```sql
-
+select distinct a.company,a.num
+from route a join route b on (a.num=b.num and a.company=b.company)
+where a.stop='115' and b.stop='137'
 ```
+The first thought is
+```sql
+select distinct a.company,b.num 
+from (select * from route where stop=115) a join
+     (select * from route where stop=137) b
+     on (a.num=b.num and a.company=b.company)
+```
+It's the most straight forward and efficient way.
+
+Or you can perform self join first. It's kind of brutal 
+because db will perform Cartesian product for each route which result in a huge table.
+
+After that, apply fileters on it to pick the routes we want.
+```sql
+select distinct a.company,a.num 
+from route a join route b on (a.num=b.num and a.company=b.company)
+where a.stop='115' and b.stop='137'
+```
+If you have difficulty understanding how it works. You can try the sqls below, one at a time. 
+```sql
+select company,num,pos,stop from route
+where stop=115 or stop =137
+order by company,num
+```
+Look for a bus that stops at 115 and 137. That's what we are asked to do.
+Let's narrow down the problem to one route and observe how Cartesian product work when using self-join.
+From the sql above, obviously, the No.12 of LRT company is one of the bus we're looking for.
+
+We can start from here.
+```sql
+select * from route where company='LRT' and num='12'
+```
+List all stops of the route and check both 115 and 137 are in the route.
+```sql
+select a.company,a.num,a.pos,a.stop,b.stop from
+        (select * from route where company='LRT' and num='12') a join
+        (select * from route where company='LRT' and num='12') b
+        on (a.num=b.num and a.company=b.company)
+```
+Given the join condition, DB will generate all combinations of stops in table a and table b, i.e. (a.stop,b.stop) pairs.
+It's called Cartesian product.
+```sql
+select a.company,a.num,a.pos,a.stop,b.stop
+from (select * from route where company=LRT and num='12' order by pos) a join
+     (select * from route where company=LRT and num='12' order by pos) b
+     on (a.num=b.num and a.company=b.company)
+where a.stop=115 and b.stop=137
+```
+All we need to do is find a rcord with stop 115 and 137 in the joined table.
+Note that there are 18 records in table a; while there are 324 (18 X 18) records in the joined table which is result from Cartesian product.
+Now use the same trick to solve the original question.
+
+The main idea of this method is to create a table with a header (company, num, pos, start stop, end stop) by self-join.
+The trick is useful when you want to duplicate a column from another whatever you purpose is.
+
 
 8.
 ```sql
@@ -810,27 +867,6 @@ WHERE stopa.name='Craiglockhart' and stopb.name='London Road'
 10.
 ```sql
 
-```
-
-
-7. 
-- 直接硬幹。笛卡爾乘積做完後再篩出要的
-```sql
-select distinct a.company,a.num 
-from route a join route b on(a.num=b.num) 
-where (a.stop=115 and b.stop=137)
-```
-- 先篩出想要的資料再做笛卡爾乘積
-```sql
-select distinct a.company,b.num 
-from (select * from route where stop=115) a,
-      (select * from route where stop=137) b
-where a.num=b.num
-```
-- 等同上式
-```sql
-select distinct a.company,b.num from (select * from route where stop=115) a join
-(select * from route where stop=137) b on (a.num=b.num)
 ```
 [top](#topics)
 
