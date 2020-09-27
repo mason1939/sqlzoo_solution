@@ -879,13 +879,14 @@ where a.stop=53
 
 10.
 ```sql
-select g.num,g.company,name,g.num2,g.company2 from
-(select e.num,e.company,e.conn,f.num num2,f.company company2
-from
-  (select a.company,a.num,a.stop,b.stop conn from route a,route b where a.stop=53  and a.company=b.company and a.num=b.num)e join
-(select c.company,c.num,c.stop,d.stop conn2 from route c,route d where c.stop=147 and d.company=c.company and c.num=d.num)f
-on e.conn=f.conn2) g join 
-stops on (g.conn=stops.id)
+select g.num,g.company,name,g.num2,g.company2
+from (select e.num,e.company,e.conn,f.num num2,f.company company2
+      from (select a.company,a.num,a.stop,b.stop conn from route a,route b where a.stop=53  and a.company=b.company and a.num=b.num)e 
+           join
+           (select c.company,c.num,c.stop,d.stop conn2 from route c,route d where c.stop=147 and d.company=c.company and c.num=d.num)f
+           on e.conn=f.conn2
+     )g
+     join stops on (g.conn=stops.id)
 ```
 The problem is to find a stop,say XYZ, that connnects Craiglockhart and Lochend
 
