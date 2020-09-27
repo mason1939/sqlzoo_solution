@@ -897,6 +897,7 @@ from (select e.num,e.company,e.conn,f.num num2,f.company company2
      )g
      
      join stops on (g.conn=stops.id)
+order by g.num,name,g.num2
 ```
 The problem is to find a stop,say XYZ, that connnects Craiglockhart and Lochend
 
