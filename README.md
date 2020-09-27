@@ -222,8 +222,9 @@ ORDER BY subject,winner
 [top](#topics)
 ## Select in Select
 
-用途: 把另一個查詢當做常數來使用。
-特徵: 通常只會select一個欄位出來
+Purpose: Use the select result as a variable.
+
+Only one column will appear in select clause.
 
 1.
 ```sql
@@ -279,10 +280,9 @@ SELECT continent, name, area FROM world x
         WHERE y.continent=x.continent
           AND area>0)
 ```
-不是join，腦袋別打結。
+Calm down. It's not join.
 
 8.
-列出各洲國名字母排序最前面的國家
 ```sql
 select continent,name from world x
 where name <= ALL(select name from world y where y.continent=x.continent)
@@ -355,8 +355,8 @@ having sum(population)>=100000000
 
 ## Join
 
-- 預設是 intersect/inner join
-- 其他join
+- default: intersect/inner join
+- other join types
   - left/right
   - full 
 
@@ -740,14 +740,18 @@ from teacher
 
 ## Self Join
 
-用途: 想要撈取的資料在同一張表。將垂直的資料橫向展開。
+Purpose: Add columns base on the same table.
 
-例如: 
+Ex1.
 
-employee(id,name,duty,manager_id): manager_id是也是員工id, 現在想撈出主管的姓名
+employee(id,name,duty,manager_id): 
 
-bus_route(num,company,pos,stop): 合併時把公車依路線做笛卡爾乘積後就列舉能某路公車任兩點間的路線集合。如同sql zoo中的範例
+Because a manager_id is part of employee id. If we want to add a column,which displays name of a manager of a employee, we use self-join
 
+Ex2.
+bus_route(num,company,pos,stop):
+
+Generate table show all combinations of 2 points in a route, we use self-join.
 
 1.
 ```sql
