@@ -823,7 +823,9 @@ where stop=115 or stop =137
 order by company,num
 ```
 Look for a bus that stops at 115 and 137. That's what we are asked to do.
+
 Let's narrow down the problem to one route and observe how Cartesian product work when using self-join.
+
 From the sql above, obviously, the No.12 of LRT company is one of the bus we're looking for.
 
 We can start from here.
@@ -848,10 +850,13 @@ from (select * from route where company=LRT and num='12' order by pos) a join
 where a.stop=115 and b.stop=137
 ```
 All we need to do is find a rcord with stop 115 and 137 in the joined table.
+
 Note that there are 18 records in table a; while there are 324 (18 X 18) records in the joined table which is result from Cartesian product.
-Now use the same trick to solve the original question.
+
+Now use the same trick to solve the original problem.
 
 The main idea of this method is to create a table with a header, (company, num, pos, start stop, end stop), by self-join.
+
 The trick is useful when you want to duplicate one column from another whatever you purpose is.
 
 8.
@@ -883,12 +888,12 @@ on e.conn=f.conn2) g join
 stops on (g.conn=stops.id)
 ```
 The problem is to find a stop,say XYZ, that connnects Craiglockhart and Lochend
+
 Step 1. Find direct route from Craiglockhart to XYZ
+
 Step 2. Find direct route from Lochend to XYZ
+
 Step 3. Find the interection of results of step1 and step2.
-
-
-
 
 [top](#topics)
 
