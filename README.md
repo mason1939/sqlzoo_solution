@@ -746,7 +746,7 @@ Ex1.
 
 employee(id,name,duty,manager_id): 
 
-Because a manager_id is part of employee id. If we want to add a column,which displays name of a manager of a employee, we use self-join
+Because a manager_id is also a employee id. If we want to add a column,which displays name of a manager of a employee, we use self-join
 
 Ex2.
 bus_route(num,company,pos,stop):
