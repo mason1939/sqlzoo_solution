@@ -301,8 +301,8 @@ where population > ALL(select 3*population from world y where y.name!=x.name and
 
 ## Sum and Count
 
-用途: 使用聚合函數
-特徵: 會用到group by,having
+- Usually they are used along with group by.
+- use having when there are filtering criteria.
 
 1.
 ```sql
@@ -861,7 +861,9 @@ Now use the same trick to solve the original problem.
 
 The main idea of this method is to create a table with a header, (company, num, pos, start stop, end stop), by self-join.
 
-The trick is useful when you want to duplicate one column from another whatever you purpose is.
+The trick is useful when you want to add one column based on another whatever you purpose is.
+
+But there is always a cost when using join.
 
 8.
 ```sql
